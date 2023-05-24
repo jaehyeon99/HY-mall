@@ -54,7 +54,7 @@ function Reco(){
                 "item_no": retre }
             ).then((res)=>setRetreArg(res.data.hits.hits))
         }
-    },[open])
+    },[open,retre])
 
     if (isLoading) {
         return(
@@ -80,7 +80,7 @@ function Reco(){
                                 setReco(res.item_no_idx)
                                 setRetre(res.item_no_idx)
                             }} key={index} >
-                                <img className="bg-cover" src={`https://fcrec.bunjang.io/img/${res.image_name}.jpg`} width={100} height={200}/>
+                                <img className="bg-cover" src={`https://fcrec.bunjang.io/img/${res.image_name}.jpg`} width={100} height={200} alt="Img"/>
                             </div>
                     )
                 })
@@ -99,7 +99,7 @@ function Reco(){
                             <img onClick={()=>{
                                 setOpen(true)
                                 setUrl(res._source.image_name)
-                            }} src={`https://fcrec.bunjang.io/img/${res._source.image_name}.jpg`}/>
+                            }} src={`https://fcrec.bunjang.io/img/${res._source.image_name}.jpg`} alt="Img"/>
                         )
                     })
                 }
@@ -113,7 +113,7 @@ function Reco(){
                 <Box sx={style}>
                     <div>
                         <p><span className="text-yellow-300">HY</span>-MALL</p>
-                        <img className="py-3" src={`https://fcrec.bunjang.io/img/${imgUrl}.jpg`}/>
+                        <img className="py-3" src={`https://fcrec.bunjang.io/img/${imgUrl}.jpg`} alt="Img"/>
                         <p className="text-sm">Brand name</p>
                         <p className="text-lg">Product name</p>
                         <p className="text-3xl">$30</p>
@@ -124,7 +124,7 @@ function Reco(){
                                     <img onClick={()=>{
                                         setOpen(true)
                                         setUrl(res._source.image_name)
-                                    }} src={`https://fcrec.bunjang.io/img/${res._source.image_name}.jpg`}/>
+                                    }} src={`https://fcrec.bunjang.io/img/${res._source.image_name}.jpg`} alt="Img"/>
                                 )
                             })
                         }
