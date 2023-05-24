@@ -14,14 +14,16 @@ const queryClient = new QueryClient()
 function App(){
   return(
       <QueryClientProvider client={queryClient}>
-      <div className="max-w-5xl m-auto">
+      <div>
         <Nav/>
+          <div className="max-w-6xl m-auto">
           <BrowserRouter>
               <Routes>
               <Route path="/" exact element={<Main/>} />
               <Route path="/Reco" element={<Reco/>} />
               </Routes>
           </BrowserRouter>
+          </div>
       </div>
       </QueryClientProvider>
   )
