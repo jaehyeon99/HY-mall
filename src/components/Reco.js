@@ -149,7 +149,7 @@ function Reco() {
               <div className="mb-5">
                 <p className="text-sm font-bold">{info.name}</p>
                 <p className="text-sm">
-                  {info.price.toLocaleString("ko-KR")} 원
+                  {info?.price?.toLocaleString("ko-KR")} 원
                 </p>
               </div>
 
