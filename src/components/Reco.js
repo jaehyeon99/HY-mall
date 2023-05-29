@@ -64,7 +64,7 @@ function Reco() {
       <div className="flex justify-between">
         <div className="h-96 w-1/2 overflow-y-auto">
           <div className="grid grid-cols-6 items-center">
-            {data.hits.map((res, index) => {
+            {data.hits.slice(0, 48).map((res, index) => {
               return (
                 <div
                   className="overflow-hidden "
@@ -153,8 +153,8 @@ function Reco() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-5">
-                {retreArg.map((res, index) => {
+              <div className="grid grid-cols-4">
+                {retreArg.slice(1, 9).map((res, index) => {
                   return (
                     <img
                       key={index}
