@@ -36,7 +36,7 @@ function Reco() {
       return;
     } else {
       axios
-        .post(`https://43.201.45.147/reco_api`, {
+        .post(`http://43.201.45.147/reco_api`, {
           item_no: [reco],
         })
         .then((res) => setRecoArg(res.data));
