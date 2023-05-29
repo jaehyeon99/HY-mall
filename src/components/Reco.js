@@ -27,7 +27,7 @@ function Reco() {
   const [info, setInfo] = useState([{ name: "" }, { price: 0 }]);
 
   const getReco = () => {
-    return axios.get("http://43.201.45.147/").then((res) => res.data.hits);
+    return axios.get("https://sonchanhyuk.com").then((res) => res.data.hits);
   };
   const { data, isLoading } = useQuery(["Reco"], getReco);
 
@@ -36,7 +36,7 @@ function Reco() {
       return;
     } else {
       axios
-        .post(`http://43.201.45.147/reco_api`, {
+        .post(`https://sonchanhyuk.com/reco_api`, {
           item_no: [reco],
         })
         .then((res) => setRecoArg(res.data));
@@ -46,7 +46,7 @@ function Reco() {
   useEffect(() => {
     if (open) {
       axios
-        .post(`http://43.201.45.147/retrieval_api`, {
+        .post(`https://sonchanhyuk.com/retrieval_api`, {
           item_no: retre,
         })
         .then((res) => setRetreArg(res.data.hits.hits));

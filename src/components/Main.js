@@ -27,7 +27,7 @@ function Main() {
   };
 
   const getReco = () => {
-    return axios.get("http://43.201.45.147/").then((res) => res.data.hits);
+    return axios.get("https://sonchanhyuk.com").then((res) => res.data.hits);
   };
   const { data, isLoading } = useQuery(["Reco"], getReco);
 
