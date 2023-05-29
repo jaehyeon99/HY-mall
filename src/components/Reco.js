@@ -11,8 +11,8 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
   boxShadow: 24,
+  outline: "none",
   p: 4,
 };
 
@@ -22,8 +22,9 @@ function Reco() {
   const [open, setOpen] = useState(false);
   const [imgUrl, setUrl] = useState("");
   const handleClose = () => setOpen(false);
-  const [retre, setRetre] = useState("reco_id");
+  const [retre, setRetre] = useState("retre_id");
   const [retreArg, setRetreArg] = useState([]);
+  const [info, setInfo] = useState([{ name: "" }, { price: 0 }]);
 
   const getReco = () => {
     return axios.get("http://43.201.45.147/").then((res) => res.data.hits);
@@ -35,12 +36,10 @@ function Reco() {
       return;
     } else {
       axios
-        .post(`http://43.201.45.147/retrieval_api`, {
-          item_no: reco,
+        .post(`https://43.201.45.147/reco_api`, {
+          item_no: [reco],
         })
-        .then((res) => {
-          setRecoArg(res.data.hits.hits);
-        });
+        .then((res) => setRecoArg(res.data));
     }
   }, [reco]);
 
@@ -51,6 +50,8 @@ function Reco() {
           item_no: retre,
         })
         .then((res) => setRetreArg(res.data.hits.hits));
+    } else {
+      setRetreArg([]);
     }
   }, [open, retre]);
 
@@ -69,7 +70,6 @@ function Reco() {
                   className="overflow-hidden "
                   onClick={() => {
                     setReco(res.item_no_idx);
-                    setRetre(res.item_no_idx);
                   }}
                   key={index}
                 >
@@ -85,10 +85,9 @@ function Reco() {
             })}
           </div>
         </div>
+
         {/* 추천 상품 목록 띄위기*/}
-        {/*<div className="my-10">*/}
-        {/*    <p>추천 상품 목록</p>*/}
-        {/*</div>*/}
+
         <div className="w-1/3">
           <div className="flex space-x-10 items-end">
             <div className="w-full">
@@ -101,11 +100,18 @@ function Reco() {
                   {recoArg.map((res, index) => {
                     return (
                       <img
+                        key={index}
                         onClick={() => {
                           setOpen(true);
-                          setUrl(res._source.image_name);
+                          setUrl(res.image_name);
+                          setRetre(res.item_no_idx);
+                          const productInfo = {
+                            name: res.item_name,
+                            price: res.price,
+                          };
+                          setInfo(productInfo);
                         }}
-                        src={`https://fcrec.bunjang.io/img/${res._source.image_name}.jpg`}
+                        src={`https://fcrec.bunjang.io/img/${res.image_name}.jpg`}
                         alt="Img"
                       />
                     );
@@ -121,6 +127,9 @@ function Reco() {
             </div>
           </div>
         </div>
+
+        {/*레코 아이템 크게 및 10개의 리트리벌 */}
+
         <Modal
           open={open}
           onClose={handleClose}
@@ -137,16 +146,26 @@ function Reco() {
                 src={`https://fcrec.bunjang.io/img/${imgUrl}.jpg`}
                 alt="Img"
               />
-              <p className="text-sm">Brand name</p>
-              <p className="text-lg">Product name</p>
-              <p className="text-3xl">$30</p>
+              <div className="mb-5">
+                <p className="text-sm font-bold">{info.name}</p>
+                <p className="text-sm">
+                  {info.price.toLocaleString("ko-KR")} 원
+                </p>
+              </div>
+
               <div className="grid grid-cols-5">
                 {retreArg.map((res, index) => {
                   return (
                     <img
+                      key={index}
                       onClick={() => {
                         setOpen(true);
                         setUrl(res._source.image_name);
+                        const newInfo = {
+                          name: res._source.item_name,
+                          price: res._source.price,
+                        };
+                        setInfo(newInfo);
                       }}
                       src={`https://fcrec.bunjang.io/img/${res._source.image_name}.jpg`}
                       alt="Img"

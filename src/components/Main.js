@@ -1,6 +1,8 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 function Main() {
   const settings = {
@@ -10,8 +12,28 @@ function Main() {
     slidesToScroll: 1,
     arrows: false,
     dots: true,
+    autoplay: true,
+    autoplaySpeed: 4500,
+  };
+  const randomSetting = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 10,
+    slidesToScroll: 5,
+    arrows: true,
+    dots: false,
+    autoplay: true,
+    autoplaySpeed: 3000,
   };
 
+  const getReco = () => {
+    return axios.get("http://43.201.45.147/").then((res) => res.data.hits);
+  };
+  const { data, isLoading } = useQuery(["Reco"], getReco);
+
+  if (isLoading) {
+    return <div className="text-center">잠시만 기다려주세요...</div>;
+  }
   return (
     <div>
       <div className="flex justify-center">
@@ -30,115 +52,32 @@ function Main() {
         </div>
       </div>
       <div>
-        <h2 className="font-bold text-xl mt-16 mb-10">00 님을 위한 추천</h2>
-        <div className="flex justify-center space-x-3">
-          <div>
-            <img
-              src="/image/product.png"
-              alt="product"
-              width={200}
-              height={100}
-            />
-            <p>모자</p>
-            <p className="font-bold">30,000 원</p>
-          </div>
-          <div>
-            <img
-              src="/image/product.png"
-              alt="product"
-              width={200}
-              height={100}
-            />
-            <p>모자</p>
-            <p className="font-bold">30,000 원</p>
-          </div>
-          <div>
-            <img
-              src="/image/product.png"
-              alt="product"
-              width={200}
-              height={100}
-            />
-            <p>모자</p>
-            <p className="font-bold">30,000 원</p>
-          </div>
-          <div>
-            <img
-              src="/image/product.png"
-              alt="product"
-              width={200}
-              height={100}
-            />
-            <p>모자</p>
-            <p className="font-bold">30,000 원</p>
-          </div>
-          <div>
-            <img
-              src="/image/product.png"
-              alt="product"
-              width={200}
-              height={100}
-            />
-            <p>모자</p>
-            <p className="font-bold">30,000 원</p>
-          </div>
-        </div>
-      </div>
-      <div>
-        <h2 className="font-bold text-xl mt-16 mb-10">
-          00이 즐겨찾기 한 브랜드 상품
-        </h2>
-        <div className="flex justify-center space-x-3">
-          <div>
-            <img
-              src="/image/product.png"
-              alt="product"
-              width={200}
-              height={100}
-            />
-            <p>모자</p>
-            <p className="font-bold">30,000 원</p>
-          </div>
-          <div>
-            <img
-              src="/image/product.png"
-              alt="product"
-              width={200}
-              height={100}
-            />
-            <p>모자</p>
-            <p className="font-bold">30,000 원</p>
-          </div>
-          <div>
-            <img
-              src="/image/product.png"
-              alt="product"
-              width={200}
-              height={100}
-            />
-            <p>모자</p>
-            <p className="font-bold">30,000 원</p>
-          </div>
-          <div>
-            <img
-              src="/image/product.png"
-              alt="product"
-              width={200}
-              height={100}
-            />
-            <p>모자</p>
-            <p className="font-bold">30,000 원</p>
-          </div>
-          <div>
-            <img
-              src="/image/product.png"
-              alt="product"
-              width={200}
-              height={100}
-            />
-            <p>모자</p>
-            <p className="font-bold">30,000 원</p>
-          </div>
+        <h2 className="font-bold text-xl mt-16 mb-10">최근 Hot 상품</h2>
+        <div>
+          <Slider {...randomSetting}>
+            {data.hits.map((res, index) => {
+              return (
+                <div index={index} className="w-50 h-50">
+                  <img
+                    className="max-w-96 max-h-28"
+                    src={`https://fcrec.bunjang.io/img/${res.image_name}.jpg`}
+                    alt="random"
+                  />
+                </div>
+              );
+            })}
+          </Slider>
+          {/*{data.hits.slice(0, 10).map((res, index) => {*/}
+          {/*  return (*/}
+          {/*    <div index={index} className="w-50 h-50">*/}
+          {/*      <img*/}
+          {/*        className="max-w-96 max-h-28"*/}
+          {/*        src={`https://fcrec.bunjang.io/img/${res.image_name}.jpg`}*/}
+          {/*        alt="random"*/}
+          {/*      />*/}
+          {/*    </div>*/}
+          {/*  );*/}
+          {/*})}*/}
         </div>
       </div>
     </div>
