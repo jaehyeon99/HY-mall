@@ -74,7 +74,7 @@ function Reco() {
                   key={index}
                 >
                   <img
-                    className="bg-cover"
+                    className="bg-cover cursor-pointer"
                     src={`https://fcrec.bunjang.io/img/${res.image_name}.jpg`}
                     width={100}
                     height={100}
@@ -100,6 +100,7 @@ function Reco() {
                   {recoArg.map((res, index) => {
                     return (
                       <img
+                        className="cursor-pointer"
                         key={index}
                         onClick={() => {
                           setOpen(true);
@@ -169,6 +170,7 @@ function Reco() {
                       }}
                       src={`https://fcrec.bunjang.io/img/${res._source.image_name}.jpg`}
                       alt="Img"
+                      className="cursor-pointer"
                     />
                   );
                 })}
